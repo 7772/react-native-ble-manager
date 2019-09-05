@@ -396,7 +396,14 @@ RCT_EXPORT_METHOD(connect:(NSString *)peripheralUUID callback:(nonnull RCTRespon
         [manager connectPeripheral:peripheral options:nil];
         
     } else {
-        NSString *error = [NSString stringWithFormat:@"Could not find peripheral %@.", peripheralUUID];
+        NSDictionary *error = @{
+            @"message": @"Connection error",
+            @"status": @133,
+            @"newState": [NSNull null],
+            @"uuid": peripheralUUID,
+            @"peripheralId": [NSNull null],
+        };
+
         NSLog(@"%@", error);
         callback(@[error, [NSNull null]]);
     }
