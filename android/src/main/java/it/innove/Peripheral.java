@@ -351,7 +351,14 @@ public class Peripheral extends BluetoothGattCallback {
 				}
 			}
 			if (connectCallback != null) {
-				connectCallback.invoke("Connection error");
+				WritableMap error = Arguments.createMap();
+				error.putInt("status", status);
+				error.putInt("newState", newState);
+				error.putString("message", "Connection error");
+				error.putString("uuid", null);
+				error.putString("peripheralId", device.getAddress());
+
+				connectCallback.invoke(error);
 				connectCallback = null;
 			}
 			writeCallback = null;
